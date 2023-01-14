@@ -36,3 +36,5 @@ class TransactionsHistory(_database.base):
     comments = _sql.column(_sql.TEXT)
     time = _sql.column(_sql.DATETIME)
     amount = _sql.column(_sql.INT)
+
+
