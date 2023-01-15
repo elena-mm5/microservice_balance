@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING, List, Dict
 
 import database as _database
 import models as _models
@@ -28,6 +28,10 @@ async def create_user(
     data_base.commit()
     data_base.refresh(user)
     return _schemas.Balance.from_orm(user)
+
+async def get_user(data_base: 'Session') -> Dict[_schemas.Balance]:
+    users = data_base.query(_models.Account).all()
+    return dict(map(_schemas.Balance.from_orm(), users))
 
 
 

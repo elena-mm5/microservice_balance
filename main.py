@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List, Dict
 import fastapi as _fastapi
 import sqlalchemy.orm as _orm
 
@@ -19,4 +19,6 @@ async def create_user(
 ):
     return await _services.create_user(user=user, data_base=data_base)
 
-
+@app.get('api/usersbalance', response_model=Dict[_schemas.Balance])
+async def get_user(data_base: _orm.Session = _fastapi.Depends(_services.get_data_base)):
+    return await _services.get_user(data_base=data_base)
