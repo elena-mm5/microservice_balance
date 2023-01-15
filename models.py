@@ -4,7 +4,6 @@ import sqlalchemy as _sql
 import database as _database
 
 
-
 class Account(_database.base):
     __tablename__ = "accounts"
     user_id = _sql.Column(_sql.BIGINT, primary_key=True, index=True)

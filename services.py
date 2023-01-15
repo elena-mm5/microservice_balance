@@ -1,7 +1,32 @@
+from typing import TYPE_CHECKING, List
+
 import database as _database
 import models as _models
+import schemas as _schemas
+
+if TYPE_CHECKING:
+    from sqlalchemy.orm import Session
+
 
 def _add_tables():
     return _database.base.metadata.create_all(bind=_database.engine)
 
-_add_tables()
+
+def get_data_base():
+    data_base = _database.session_local()
+    try:
+        yield data_base
+    finally:
+        data_base.close()
+
+
+async def create_user(
+        user: _schemas.Account, data_base: 'Session') -> _schemas.Reservation:
+    user = _models.Account(**user.dict())
+    data_base.add(user)
+    data_base.commit()
+    data_base.refresh(user)
+    return _schemas.Reservation.from_orm(user)
+
+
+
