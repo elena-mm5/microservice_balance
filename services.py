@@ -21,12 +21,17 @@ def get_data_base():
 
 
 async def create_user(
-        user: _schemas.Account, data_base: 'Session') -> _schemas.Reservation:
+        user: _schemas.Account, data_base: 'Session'
+) -> _schemas.Balance:
     user = _models.Account(**user.dict())
     data_base.add(user)
     data_base.commit()
     data_base.refresh(user)
-    return _schemas.Reservation.from_orm(user)
+    return _schemas.Balance.from_orm(user)
+
+
+
+
 
 
 

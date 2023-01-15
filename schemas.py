@@ -15,6 +15,8 @@ class Balance(_pydantic.BaseModel):
     comments: str
     amount: int
 
+    orm_mode=True
+
 
 class Accrual(Balance):
 

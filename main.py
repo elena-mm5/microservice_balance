@@ -12,10 +12,11 @@ if TYPE_CHECKING:
 app = _fastapi.FastAPI()
 
 
-@app.get('/')
-async def DataBase():
-    return 'Welcome to Data Base'
-
-
+@app.post('api/usersbalance', response_model=_schemas.Balance)
+async def create_user(
+    user: _schemas.Account,
+    data_base: _orm.Session = _fastapi.Depends(_services.get_data_base),
+):
+    return await _services.create_user(user=user, data_base=data_base)
 
 
